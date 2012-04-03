@@ -13,7 +13,9 @@ To install run
 
 	curl -s https://raw.github.com/micmcg/FFV/master/ffv.sh | bash
 
-You'll probably notice Finder popping up as it mounts the .dmgs, just leave it to do it's thing, it will unmount them automatically once it's installed the app.  
+You'll probably notice Finder popping up as it mounts the .dmgs, just leave it to do it's thing, it will unmount them automatically once it's installed the app. 
+
+The Firefox versions are installed to `/Applications/Firefox-Versions/` and the installer cache is in `~/.ffv` 
 
 ###To Do
 
