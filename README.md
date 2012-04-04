@@ -1,6 +1,6 @@
 # FFV - Firefox Versions
 
-**FFV** is a script that installs a selection of Firefox versions, creates profiles for each version and binds each version to it's profile. It also disables auto updates and the default browser check. 
+**FFV** is a script that installs a selection of Firefox versions, creates profiles for each version and hard binds each version to it's profile. It also disables auto updates and the default browser check. 
 
 It currently installs Firefox **3.6.9**, **4.0.1**, **5.0.1**, **6.0.2**, **7.0.1**, **8.0.1**, **9.0.1** & **10.0.1**
 
