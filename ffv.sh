@@ -84,8 +84,8 @@ for i in "${versions[@]}"; do
         else
             if [ -d ~/Library/Application\ Support/Firefox/Profiles/*.Firefox-$i-FFV ]
                 then
-                echo "  # Deleting existing profile Firefox-$i #"
-                rm -rf ~/Library/Application\ Support/Firefox/Profiles/*.Firefox-$i-FFV
+                    echo "  # Deleting existing profile Firefox-$i #"
+                    rm -rf ~/Library/Application\ Support/Firefox/Profiles/*.Firefox-$i-FFV
             fi
 
             echo "  # Creating profile for Firefox-$i #"
@@ -128,6 +128,6 @@ for i in "${versions[@]}"; do
     echo ""
 done
 
-echo "### FINISHED INSTALLING ALL FIREFOXES ###"
+echo "### FINISHED INSTALLING ALL THE FIREFOXES ###"
 
 
