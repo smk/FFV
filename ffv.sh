@@ -1,28 +1,54 @@
 #!/usr/bin/env bash
 
-mkdir -p /Applications/Firefox-Versions
-mkdir -p ~/.ffv && cd ~/.ffv
-
 versions=('3.6.9' '4.0.1' '5.0.1' '6.0.2' '7.0.1' '8.0.1' '9.0.1' '10.0.1')
 
-force=false
-clean=false
+uninstall=${UNINSTALL:-false}
+clean=${CLEAN:-false}
+force=${FORCE:-false}
 
-while getopts ":f :c" opt; do
+while getopts ":u :c :f" opt; do
     case $opt in
-    f)
-        echo "Enabling -Force mode, will overwrite applications and profiles" >&2
-        force=true
+    u)
+        uninstall=true
         ;;
     c)
-        echo "Enabling -Clean mode, will download fresh copies of the installers" >&2
         clean=true
         ;;
+    f)
+        force=true
+        ;;
     \?)
-      echo "Invalid option: -$OPTARG" >&2
+      echo "Invalid option: -$OPTARG"
       ;;
   esac
 done
+
+if $uninstall
+    then
+        echo "### Uninstalling FFV ###"
+        echo "  # Removing FFV Cache #"
+        rm -rf ~/.ffv
+        echo "  # Removing FFV Firefox Applications #"
+        rm -rf /Applications/Firefox-Versions
+        echo "  # Removing FFV profiles"
+        for i in "${versions[@]}"; do
+            rm -rf ~/Library/Application\ Support/Firefox/Profiles/*.Firefox-$i-FFV
+        done
+        echo "### FFV Uninstall complete ###"
+        exit
+fi
+if $clean
+    then
+        echo "Enabling -Clean mode, will download fresh copies of the installers"
+fi
+
+if $force
+    then
+        echo "Enabling -Force mode, will overwrite applications and profiles"
+fi
+
+mkdir -p /Applications/Firefox-Versions
+mkdir -p ~/.ffv && cd ~/.ffv
 
 for i in "${versions[@]}"; do
     echo ""
@@ -52,26 +78,26 @@ for i in "${versions[@]}"; do
             cp -R /Volumes/Firefox/Firefox.app/ /Applications/Firefox-Versions/Firefox-$i.app
             hdiutil unmount /Volumes/Firefox/
     fi
-    if ! $force && [ -f ~/Library/Application\ Support/Firefox/Profiles/*.Firefox-$i/prefs.js ]
+    if ! $force && [ -f ~/Library/Application\ Support/Firefox/Profiles/*.Firefox-$i-FFV/prefs.js ]
         then
             echo "  # Skipping profile creation #"
         else
-            if [ -d ~/Library/Application\ Support/Firefox/Profiles/*.Firefox-$i ]
+            if [ -d ~/Library/Application\ Support/Firefox/Profiles/*.Firefox-$i-FFV ]
                 then
                 echo "  # Deleting existing profile Firefox-$i #"
-                rm -rf ~/Library/Application\ Support/Firefox/Profiles/*.Firefox-$i
+                rm -rf ~/Library/Application\ Support/Firefox/Profiles/*.Firefox-$i-FFV
             fi
 
             echo "  # Creating profile for Firefox-$i #"
             if [ -f /Applications/Firefox-Versions/Firefox-$i.app/Contents/MacOS/firefox-bin-orig ]
                 then
-                    /Applications/Firefox-Versions/Firefox-$i.app/Contents/MacOS/firefox-bin-orig -CreateProfile Firefox-$i
+                    /Applications/Firefox-Versions/Firefox-$i.app/Contents/MacOS/firefox-bin-orig -CreateProfile Firefox-$i-FFV
                 else
-                    /Applications/Firefox-Versions/Firefox-$i.app/Contents/MacOS/firefox-bin -CreateProfile Firefox-$i
+                    /Applications/Firefox-Versions/Firefox-$i.app/Contents/MacOS/firefox-bin -CreateProfile Firefox-$i-FFV
             fi
             echo ""
             echo "  # Disabling auto update and default browser check for Firefox-$i #"
-            find ~/Library/Application\ Support/Firefox/Profiles/*.Firefox-$i -name prefs.js -print0 -exec sh -c 'echo "
+            find ~/Library/Application\ Support/Firefox/Profiles/*.Firefox-$i-FFV -name prefs.js -print0 -exec sh -c 'echo "
             user_pref(\"app.update.auto\", false);
             user_pref(\"app.update.disable_button.showUpdateHistory\", false);
             user_pref(\"app.update.enabled\", false);
@@ -87,7 +113,7 @@ for i in "${versions[@]}"; do
             echo "  # Binding profile for Firefox-$i #"
             mv /Applications/Firefox-Versions/Firefox-$i.app/Contents/MacOS/firefox-bin /Applications/Firefox-Versions/Firefox-$i.app/Contents/MacOS/firefox-bin-orig
             echo "#!/bin/bash
-            exec \"/Applications/Firefox-Versions/Firefox-$i.app/Contents/MacOS/firefox-bin-orig\" -P Firefox-$i" > /Applications/Firefox-Versions/Firefox-$i.app/Contents/MacOS/firefox-bin
+            exec \"/Applications/Firefox-Versions/Firefox-$i.app/Contents/MacOS/firefox-bin-orig\" -P Firefox-$i-FFV" > /Applications/Firefox-Versions/Firefox-$i.app/Contents/MacOS/firefox-bin
             chmod +x /Applications/Firefox-Versions/Firefox-$i.app/Contents/MacOS/firefox-bin
 
             if [ -f /Applications/Firefox-Versions/Firefox-$i.app/Contents/MacOS/firefox ]
