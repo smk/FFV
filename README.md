@@ -21,7 +21,7 @@ It will take a while to install all versions when downloading the installers for
 
 There are a couple of options you can pass in as well
 
-**CLEAN=true** - Clean install, force the script to redownload the installers
+**CLEAN=true** - Clean install, tell the script to redownload the installers
 
 	curl -s https://raw.github.com/micmcg/FFV/master/ffv.sh | CLEAN=true bash
 
