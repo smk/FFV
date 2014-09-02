@@ -1,8 +1,10 @@
-# FFV - Firefox Versions
+# FFVesr - Firefox Versions (ESR)
 
-**FFV** is a script that installs a selection of Firefox versions, creates profiles for each version and hard binds each version to it's profile. It also disables auto updates and the default browser check.
+This script is a fork of https://github.com/micmcg/FFV.
 
-It currently installs Firefox **3.6.9**, **4.0.1**, **5.0.1**, **6.0.2**, **7.0.1**, **8.0.1**, **9.0.1**, **10.0.1**, **11.0**, **12.0**, **13.0**, **14.0**, **15.0**, **16.0**, **17.0**, **18.0.2**, **19.0.2**, **20.0.1** & **21.0**
+**FFVesr** is a script that installs a selection of Firefox ESR versions, creates profiles for each version and hard binds each version to it's profile. It also disables auto updates and the default browser check.
+
+It currently installs lastest Firefox ESR **10.0.x**, **17.0.x**, **24.x**, **31.x**.
 
 This script assumes that you are probably running a standard, autoupdating copy of Firefox with a configured profile and will leave it alone. It's perfectly safe to run this along side a standard Firefox install.
 
@@ -13,7 +15,7 @@ This only works on OS X and it's entirely possible it relies on things specific 
 
 To install run
 
-	curl -s https://raw.github.com/micmcg/FFV/master/ffv.sh | bash
+	curl -s https://raw.github.com/smk/FFV/master/ffv.sh | bash
 
 By default it will use the cached installers if they exist and won't overwrite existing applications and profiles. This should mean when a new version comes out (and I update the script) you can just run it again and it will only download and install the new version
 
@@ -25,19 +27,19 @@ There are a couple of options you can pass in as well
 
 **CLEAN=true** - Clean install, tell the script to redownload the installers
 
-	curl -s https://raw.github.com/micmcg/FFV/master/ffv.sh | CLEAN=true bash
+	curl -s https://raw.github.com/smk/FFV/master/ffv.sh | CLEAN=true bash
 
 **FORCE=true** - Force the script to overwrite existing applications & profiles
 
-	curl -s https://raw.github.com/micmcg/FFV/master/ffv.sh | FORCE=true bash
+	curl -s https://raw.github.com/smk/FFV/master/ffv.sh | FORCE=true bash
 
 So if you ever get stuck, **CLEAN=true FORCE=true** should get you back to a pristine state
 
-	curl -s https://raw.github.com/micmcg/FFV/master/ffv.sh | CLEAN=true FORCE=true bash
+	curl -s https://raw.github.com/smk/FFV/master/ffv.sh | CLEAN=true FORCE=true bash
 
 **UNINSTALL=true** - If you decide you don't like FFV, this will remove the installers cache, the FFV versions of the Firefox app and the FFV Firefox profiles.
 
-	curl -s https://raw.github.com/micmcg/FFV/master/ffv.sh | UNINSTALL=true bash
+	curl -s https://raw.github.com/smk/FFV/master/ffv.sh | UNINSTALL=true bash
 
 If you have a local copy of the script you can use command line flags instead, `-c`, `-f` and `-u` respectively, e.g
 

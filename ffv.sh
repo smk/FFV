@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-versions=('3.6.9' '4.0.1' '5.0.1' '6.0.2' '7.0.1' '8.0.1' '9.0.1' '10.0.1' '11.0' '12.0' '13.0' '14.0' '15.0' '16.0' '17.0', '18.0.2', '19.0.2', '20.0.1', '21.0')
+versions=('10.0.12esr' '17.0.11esr' '24.8.0esr' '31.1.0esr')
+locale='de'
 
 uninstall=${UNINSTALL:-false}
 clean=${CLEAN:-false}
@@ -58,7 +59,7 @@ for i in "${versions[@]}"; do
             echo "  # Skipping download Firefox $i #"
         else
             echo "  # Downloading Firefox $i #"
-            curl -L ftp://ftp.mozilla.org/pub/mozilla.org/firefox/releases/$i/mac/en-GB/Firefox%20$i.dmg -o ./Firefox-$i.dmg
+            curl -L ftp://ftp.mozilla.org/pub/mozilla.org/firefox/releases/$i/mac/$locale/Firefox%20$i.dmg -o ./Firefox-$i.dmg
     fi
     if ! $force && [ -d /Applications/Firefox-Versions/Firefox-$i.app ]
         then
